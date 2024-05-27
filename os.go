@@ -10,11 +10,9 @@ func CreateFile(filename string, contents string) error {
 	if err != nil {
 		return err
 	}
-
 	if _, err = file.WriteString(contents); err != nil {
 		return err
 	}
-
 	return nil
 }
 
