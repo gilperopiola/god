@@ -16,3 +16,13 @@ func ToInt(s string) int {
 func ToString(n int) string {
 	return strconv.Itoa(n)
 }
+
+/* -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~ */
+
+// Helps avoiding an extra if when a func returns (string, error) but you need it as a string
+func ToIntAndErr(s string, err error) (int, error) {
+	if err != nil {
+		return 0, err
+	}
+	return strconv.Atoi(s)
+}
