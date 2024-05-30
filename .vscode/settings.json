@@ -1,0 +1,147 @@
+{
+    "editor.tokenColorCustomizations": {
+        "variables": {
+            "foreground": "#e5e59d"
+        },
+        "types": {
+            "foreground": "#60cf8b"
+        },
+        "functions": {
+            "foreground": "#e08941"
+        },
+        "strings": {
+            "foreground": "#90785d",
+            "fontStyle": "italic"
+        },
+        "comments": {
+            "foreground": "#85587d"
+        },
+        "textMateRules": [
+            {
+                "scope": "source.go keyword.function.go",
+                "settings": {
+                    "fontStyle": "italic bold",
+                    "foreground": "#b13535"
+                }
+            },
+            {
+                "scope": [
+                    "variable.other.property"
+                ],
+                "settings": {
+                    "fontStyle": "italic underline",
+                    "foreground": "#ffffff"
+                }
+            },
+            {
+                "scope": [
+                    "entity.name.function.go"
+                ],
+                "settings": {
+                    "fontStyle": "italic bold",
+                    "foreground": "#EDa43a"
+                }
+            },
+            {
+                "scope": "source.go keyword.struct.go",
+                "settings": {
+                    "foreground": "#e08941",
+                    "fontStyle": "italic bold"
+                }
+            },
+            {
+                "scope": "source.go keyword.const.go",
+                "settings": {
+                    "foreground": "#e08941",
+                    "fontStyle": "italic bold"
+                }
+            },
+            {
+                "scope": "source.go keyword.var.go",
+                "settings": {
+                    "foreground": "#e08941",
+                    "fontStyle": "italic bold"
+                }
+            },
+            {
+                "scope": "source.go keyword.type.go",
+                "settings": {
+                    "foreground": "#e08941",
+                    "fontStyle": "italic bold"
+                }
+            },
+            {
+                "scope": [
+                    "source.go storage.type.string.go"
+                ],
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": [
+                    "source.go storage.type.boolean.go"
+                ],
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": [
+                    "source.go storage.type.integer.go"
+                ],
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": [
+                    "source.go storage.type.byte.go"
+                ],
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": "source.go keyword.map.go",
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": "keyword.interface.go",
+                "settings": {
+                    "foreground": "#60cf8b"
+                }
+            },
+            {
+                "scope": "keyword.control",
+                "settings": {
+                    "foreground": "#1f8fda"
+                }
+            },
+            {
+                "scope": "keyword.package.go",
+                "settings": {
+                    "foreground": "#1f8fda"
+                }
+            },
+            {
+                "scope": [
+                    "keyword.operator"
+                ],
+                "settings": {
+                    "foreground": "#ffffff"
+                }
+            },
+            {
+                "scope": [
+                    "variable.parameter"
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            }
+        ]
+    }
+}
