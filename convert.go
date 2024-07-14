@@ -17,6 +17,10 @@ func ToString(n int) string {
 	return strconv.Itoa(n)
 }
 
+func Float64ToInt(f float64) int {
+	return int(f)
+}
+
 /* -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~ */
 
 // Helps avoiding an extra if when a func returns (string, error) but you need it as a string
