@@ -6,8 +6,7 @@ import (
 	"net/http"
 )
 
-// TODO - Make client a param
-func SendHTTP(client http.Client, method, url, body string, opts ...HTTPOption) (int, []byte, error) {
+func SendHTTP(client http.Client, method, url, body string, opts ...HTTPOpt) (int, []byte, error) {
 	req, err := http.NewRequest(method, url, bytes.NewReader([]byte(body)))
 	if err != nil {
 		return 0, []byte{}, err
@@ -27,25 +26,25 @@ func SendHTTP(client http.Client, method, url, body string, opts ...HTTPOption) 
 	defer resp.Body.Close()
 
 	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return resp.StatusCode, respBody, err
-	}
-
-	return resp.StatusCode, respBody, nil
+	return resp.StatusCode, respBody, err
 }
 
 /* -~-~-~- */
 
-type HTTPOption func(*http.Request)
+type HTTPOpt func(*http.Request)
 
-func WithHeader(key, value string) HTTPOption {
+func WithHeader(key, val string) HTTPOpt {
 	return func(req *http.Request) {
 		if req != nil && req.Header != nil {
-			req.Header.Set(key, value)
+			req.Header.Set(key, val)
 		}
 	}
 }
 
-func WithTokenAuthHeader(token string) HTTPOption {
+func WithBearerToken(token string) HTTPOpt {
 	return WithHeader("Authorization", "Bearer "+token)
+}
+
+func WithXRequestID(id string) HTTPOpt {
+	return WithHeader("X-Request-Id", id)
 }
