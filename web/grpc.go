@@ -5,13 +5,13 @@ import (
 	"google.golang.org/grpc/credentials"
 )
 
+/* ~-~-~-~ God's gRPC Package -~-~-~-~ */
+
 type (
-	// Type aliases
 	GrpcInfo         = grpc.UnaryServerInfo
 	GrpcHandler      = grpc.UnaryHandler
-	GrpcInterceptors = []grpc.UnaryServerInterceptor
 	GrpcServerOpts   = []grpc.ServerOption
+	GrpcInterceptors = []grpc.UnaryServerInterceptor
 	GrpcDialOpts     = []grpc.DialOption
-
-	TLSCreds = credentials.TransportCredentials
+	GrpcTLSCreds     = credentials.TransportCredentials
 )

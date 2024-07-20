@@ -1,0 +1,27 @@
+## Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+## Environment files
+.env
+.env_local
+.env_dev
+.env_prod
+.env_docker
+.env_*
+
+## Golang
+*.out
+*.test
+coverage.txt
+
+## Etc
+.DS_Store
+.vscode/
+.idea/
+*.key
+*.crt
+*.crt~
