@@ -27,29 +27,28 @@ func AddManyToMap[KT comparable, VT any](m map[KT]VT, keysAndVals ...any) map[KT
 	return m
 }
 
+// Helps reading the test cases
+func returns(s string) string {
+	return s
+}
+
 func TestMapNumToChar(t *testing.T) {
+	expected := map[int]string{
+		0: returns("`"),
+		1: returns("a"), -1: returns("_"),
+		2: returns("b"), -2: returns("^"),
+		25: returns("y"), -25: returns("G"),
+		26: returns("z"), -26: returns("F"),
+		27: returns("{"), -27: returns("E"),
+	}
 
-	want := map[int]string{}
-	want[1] = "a"
-	want[2] = "b"
-	want[26] = "z"
-	want[-31] = "A"
-	want[-6] = "Z"
-
-	want[25] = "y"
-	want[-30] = "B"
-	want[-7] = "Y"
-	want[-1] = "_"
-	want[-32] = "@"
-	want[0] = "`"
-	want[27] = "{"
-
-	for in, want := range want {
+	for in, want := range expected {
 		if got := MapNumToChar(in); got != want {
 			t.Errorf("🚫 MapNumToChar(%d) returned %s (wanted %s)", in, got, want)
 		}
 	}
-
 }
 
 /* ~-~-~-~-~ Tests: time.go -~-~-~-~ */
+
+/* ~-~-~-~-~ Testing Framework -~-~-~-~ */
