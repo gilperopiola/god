@@ -9,13 +9,16 @@ import (
 	"time"
 )
 
-var (
-	FailedIntConversionReturns = 0
-)
+/* -~-~-~-~ God -~-~-~-~ */
 
-// Used to set default values.
-func Configure(failedIntConversionReturns int) {
-	FailedIntConversionReturns = failedIntConversionReturns
+// 👀
+
+/* -~-~-~-~ Types -~-~-~-~ */
+
+type Ctx = context.Context
+
+type Num interface {
+	int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float32 | float64
 }
 
 /* -~-~-~-~ Error Handling -~-~-~-~ */
@@ -28,18 +31,16 @@ func IfErrThen(err error, do func()) {
 }
 
 // Use this to ignore the first return value of a function and only get the error.
-func OmitReturnedVal(_ any, err error) error {
+func OnlyGetErr(_ any, err error) error {
 	return err
 }
 
 // Use this to ignore the error of a function and only get the value.
-func OmitReturnedErr[T any](val T, _ error) T {
+func DontGetErr[T any](val T, _ error) T {
 	return val
 }
 
 /* -~-~-~-~ Context -~-~-~-~ */
-
-type Ctx = context.Context
 
 func NewCtx() Ctx {
 	return context.Background()
@@ -55,25 +56,32 @@ func ToString(n int) string {
 	return strconv.Itoa(n)
 }
 
-func ToInt(s string) int {
+// Note: The default value if the conversion to int fails is 0.
+// If you need to differentiate between a 0 and a failed conversion
+// you're out of luck.
+func ToInt(s string, fallback ...int) int {
 	if n, err := strconv.Atoi(s); err == nil {
 		return n
 	}
-	return FailedIntConversionReturns
+	return 0
 }
 
-// If the error is not nil, we ignore the string and return a default value.
-// Helps avoiding an extra if when a func returns (string, error) but you need it as (int, error).
+// If the error is not nil, we ignore the string and default to 0.
+// Helps avoiding an extra <if> when a func returns (string, error) but you need it as (int, error).
 func ToIntAndErr(s string, err error) (int, error) {
 	if err != nil {
-		return FailedIntConversionReturns, err
+		return 0, err
 	}
 	return strconv.Atoi(s)
 }
 
-// Is this worth it? Just use int(f) directly.
-func F64ToInt(f float64) int {
-	return int(f)
+// This can overflow with numbers greater than the OS's max int size.
+func ToIntSlice[T Num](numbers []T) []int {
+	intNumbers := make([]int, len(numbers))
+	for i, number := range numbers {
+		intNumbers[i] = int(number)
+	}
+	return intNumbers
 }
 
 /* -~-~-~-~ Strings -~-~-~-~ */

@@ -7,7 +7,24 @@ import (
 
 /* ~-~-~-~-~ The Mighty Pope -~-~-~-~ */
 
-// Not as useful as God. But still the Pope.
+// Not as useful as God. But hey, still the Pope.
+
+/* ~-~-~-~-~ Slices & Maps -~-~-~-~ */
+
+// Mainly used when you have a function that accepts an optional param
+func GetFirstOrZeroVal[T any](slice ...T) T {
+	if len(slice) == 0 {
+		return *(new(T))
+	}
+	return slice[0]
+}
+
+func AddToMap[KT comparable, VT any](m map[KT]VT, kv ...any) map[KT]VT {
+	for i := 0; i < len(kv); i += 2 {
+		m[kv[i].(KT)] = kv[i+1].(VT)
+	}
+	return m
+}
 
 /* ~-~-~-~-~ Encryption -~-~-~-~-~ */
 
@@ -24,9 +41,9 @@ const asciiLowerA = 96
 
 /* ~-~-~-~-~ OS | Filesystem | I/O ~-~-~-~-~ */
 
-func CreateFile(fileName, content string) error {
-	file, err := os.Create(fileName)
-	if err != nil || OmitReturnedVal(file.WriteString(content)) != nil {
+func CreateFile(filename, content string) error {
+	file, err := os.Create(filename)
+	if err != nil || OnlyGetErr(file.WriteString(content)) != nil {
 		return err
 	}
 	return nil

@@ -2,7 +2,7 @@ package god
 
 import "time"
 
-// Time is a godly concept. God drinks time.
+// Time is a godly concept, as well as his favorite drink.
 
 /* -~-~-~-~ Time -~-~-~-~ */
 
@@ -28,15 +28,18 @@ func FmtDateReadable(date time.Time) string {
 // 		Today = May 10	▶	date = April 10	  ▶  1 Month
 //
 func GetMonthsSince(date time.Time) int {
-	now := time.Now()
-	monthsSinceDate := int(now.Month()) - int(date.Month())
-	yearsSinceDate := now.Year() - date.Year()
+
+	var (
+		now         = time.Now()
+		yearsSince  = now.Year() - date.Year()
+		monthsSince = int(now.Month() - date.Month())
+	)
 
 	if now.Day() < date.Day() {
-		monthsSinceDate--
+		monthsSince--
 	}
 
-	return yearsSinceDate*12 + monthsSinceDate
+	return yearsSince*12 + monthsSince
 }
 
 // How many days are there in between two dates.
@@ -47,5 +50,5 @@ func GetDaysBetween(before, after time.Time) int {
 	if before.After(after) {
 		before, after = after, before
 	}
-	return int(after.Sub(before).Hours() / 24)
+	return int(after.Sub(before).Hours()) / 24
 }
