@@ -3,25 +3,22 @@ package god
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
 
-/* -~-~-~-~ God -~-~-~-~ */
-
-// 👀
-
-/* -~-~-~-~ Types -~-~-~-~ */
-
-type Ctx = context.Context
+// 👀 ─ God is always watching.
 
 type Num interface {
-	int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float32 | float64
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 |
+		~float32 | ~float64
 }
 
-/* -~-~-~-~ Error Handling -~-~-~-~ */
+/* ── ── ── Error Handling ── ── ── */
 
 // Shorthand.
 func IfErrThen(err error, do func()) {
@@ -31,29 +28,48 @@ func IfErrThen(err error, do func()) {
 }
 
 // Use this to ignore the first return value of a function and only get the error.
-func OnlyGetErr(_ any, err error) error {
+func SkipVal[T any](_ T, err error) error {
 	return err
 }
 
 // Use this to ignore the error of a function and only get the value.
-func DontGetErr[T any](val T, _ error) T {
+func SkipErr[T any](val T, _ error) T {
 	return val
 }
 
-/* -~-~-~-~ Context -~-~-~-~ */
+/* ── ── ── Context ── ── ── */
+
+type Ctx = context.Context
 
 func NewCtx() Ctx {
 	return context.Background()
 }
 
-func NewCtxWithTimeout(d time.Duration) (Ctx, context.CancelFunc) {
-	return context.WithTimeout(NewCtx(), d)
+func NewCtxWithTimeout(dur time.Duration) (Ctx, context.CancelFunc) {
+	return context.WithTimeout(NewCtx(), dur)
 }
 
-/* -~-~-~-~ Type Conversions -~-~-~-~ */
+/* ── ── ── Type Conversions ── ── ── */
 
-func ToString(n int) string {
-	return strconv.Itoa(n)
+func ToString[T any](value T) string {
+	switch val := any(value).(type) {
+	case string:
+		return val
+	case bool:
+		return strconv.FormatBool(val)
+	case int:
+		return strconv.Itoa(val)
+	case uint, int8, int16, int32, int64, uint8, uint16, uint32, uint64:
+		return fmt.Sprintf("%d", val)
+	case float32, float64:
+		return fmt.Sprintf("%.2f", val)
+	case time.Time:
+		return val.Format(time.RFC3339)
+	case []byte:
+		return string(val)
+	default:
+		return fmt.Sprintf("%v", val)
+	}
 }
 
 // Note: The default value if the conversion to int fails is 0.
@@ -84,12 +100,21 @@ func ToIntSlice[T Num](numbers []T) []int {
 	return intNumbers
 }
 
-/* -~-~-~-~ Strings -~-~-~-~ */
+// Gets the keys of a map.
+func GetMapKeys[T any](m map[string]T) []string {
+	keys := make([]string, 0, len(m))
+	for key := range m {
+		keys = append(keys, key)
+	}
+	return keys
+}
+
+/* ── ── ── Strings ── ── ── */
 
 // Gets the substring between two delimiters inside of a given string.
 //
-//	in [+10] 		▶  this [       ▶  that ]       ▶  "+10"
-//	in <p>Asd</p> 	▶  this <p>     ▶  that </p>    ▶  "Asd"
+//	in [+10] 		▶  this [       ▶  that ]       ──▶  "+10"
+//	in <p>Asd</p> 	▶  this <p>     ▶  that </p>    ──▶  "Asd"
 func SubstrBetween(this, that string, in string) (string, error) {
 
 	startFrom := strings.Index(in, this) // Get start of the first delimiter, then move to the end of it
@@ -110,10 +135,10 @@ func SubstrBetween(this, that string, in string) (string, error) {
 	return in[startFrom:endHere], nil
 }
 
-/* -~-~-~-~ Environment Variables -~-~-~-~ */
+/* ── ── ── Env Vars ── ── ── */
 
 // Use this to get env vars. You can provide a fallback value in case it doesn't exist.
-func GetEnv[T string | bool | int](key string, or T) T {
+func GetEnv[T int | string | bool](key string, or T) T {
 	val, ok := os.LookupEnv(key)
 	if !ok {
 		return or
@@ -133,7 +158,7 @@ func GetEnv[T string | bool | int](key string, or T) T {
 	return or
 }
 
-/* -~-~-~-~ Pary 🙏 -~-~-~-~ */
+/* ── ── ── Pary 🙏 ── ── ── */
 
 // ))
 //  °\°

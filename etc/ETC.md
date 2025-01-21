@@ -63,9 +63,6 @@
     🐔 🐓 🐣 🐤 🐥 🐦 🐧 🕊️ 🦅 🦆 🦉 🦢 🦚 🦜 🦃🦩🦮 🐸 🐊 🐢 🦎 🐍 🐲 🐉 🦕 🦖 🐳 🐋 🐬 🐟 🐠 🐡 🦈 🐙 🐚 🦀 🦞 🦐 🦑 🐌 🦋 🐛 🐜 🐝 🐞 🦗 🕷️ 🕸️ 🦂 🦟 🦠 
  
 
-
-
-
 # 3️⃣ For Markdown 
 
 The space inside of these quotes **" "** is a non-breaking space _(copy-pastable)_. It just doesn't break the line! The line is unbroken yeah 🥳🥳
@@ -83,8 +80,6 @@ On _Markdown_, it's a workaround for spaces being ignored sometimes.
 |   New Relic Monitg   |   Fully Dockerized           |   Modular Inteaes   |   E2E Testing        |
 |   Inversion of Col   |   Postman Collection         |   Abstractedodels   |   Free Forever       |
 |   Performance Ozed   |   Custom Log Formatter       |   Easy to Pick Up   |   Easy to Master     |
-
-
 
 
 

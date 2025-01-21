@@ -25,6 +25,6 @@ clean:
 
 push:
 	git add .
-	git commit -m "[@gilperopiola] - $(msg)"
+	git commit -m "[GOD] - $(msg)"
 	git push origin master
 

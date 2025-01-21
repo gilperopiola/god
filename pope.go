@@ -5,11 +5,9 @@ import (
 	"strings"
 )
 
-/* ~-~-~-~-~ The Mighty Pope -~-~-~-~ */
-
 // Not as useful as God. But hey, still the Pope.
 
-/* ~-~-~-~-~ Slices & Maps -~-~-~-~ */
+/* ── ── ── Slices & Maps ── ── ── */
 
 // Mainly used when you have a function that accepts an optional param
 func GetFirstOrZeroVal[T any](slice ...T) T {
@@ -26,7 +24,7 @@ func AddToMap[KT comparable, VT any](m map[KT]VT, kv ...any) map[KT]VT {
 	return m
 }
 
-/* ~-~-~-~-~ Encryption -~-~-~-~-~ */
+/* ── ── ── Encryption ── ── ── */
 
 // Returns the letter in the alphabet's position of the given number.
 //
@@ -39,11 +37,11 @@ func MapNumToChar(n int) string {
 
 const asciiLowerA = 96
 
-/* ~-~-~-~-~ OS | Filesystem | I/O ~-~-~-~-~ */
+/* ── ── ── OS | Filesystem | I/O ── ── ── */
 
 func CreateFile(filename, content string) error {
 	file, err := os.Create(filename)
-	if err != nil || OnlyGetErr(file.WriteString(content)) != nil {
+	if err != nil || SkipVal(file.WriteString(content)) != nil {
 		return err
 	}
 	return nil
