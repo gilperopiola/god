@@ -18,7 +18,7 @@ type Num interface {
 		~float32 | ~float64
 }
 
-/* ── ── ── Error Handling ── ── ── */
+/* ── ── ── Flow Control ── ── ── */
 
 // Shorthand.
 func IfErrThen(err error, do func()) {
@@ -35,6 +35,15 @@ func SkipVal[T any](_ T, err error) error {
 // Use this to ignore the error of a function and only get the value.
 func SkipErr[T any](val T, _ error) T {
 	return val
+}
+
+// Use this to run a function and return the panic, if any.
+func Panicked(fn func()) (out any) {
+	defer func() {
+		out = recover()
+	}()
+	fn()
+	return
 }
 
 /* ── ── ── Context ── ── ── */
