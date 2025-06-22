@@ -21,6 +21,26 @@ func FmtDateReadable(date time.Time) string {
 	return date.Format(time.DateTime)
 }
 
+// How many months have passed between 2 dates.
+// Does not count unfinished months:
+//
+// 		date1 = May 10	▶	date2 = April 11	  ▶  0 Months (1 day left)
+// 		date1 = May 10	▶	date2 = April 10	  ▶  1 Month
+//
+func GetMonthsBetween(date1, date2 time.Time) int {
+
+	var (
+		yearsSince  = date2.Year() - date1.Year()
+		monthsSince = int(date2.Month() - date1.Month())
+	)
+
+	if date2.Day() < date1.Day() {
+		monthsSince--
+	}
+
+	return yearsSince*12 + monthsSince
+}
+
 // How many months have passed since a given date.
 // Does not count unfinished months:
 //
@@ -28,18 +48,7 @@ func FmtDateReadable(date time.Time) string {
 // 		Today = May 10	▶	date = April 10	  ▶  1 Month
 //
 func GetMonthsSince(date time.Time) int {
-
-	var (
-		now         = time.Now()
-		yearsSince  = now.Year() - date.Year()
-		monthsSince = int(now.Month() - date.Month())
-	)
-
-	if now.Day() < date.Day() {
-		monthsSince--
-	}
-
-	return yearsSince*12 + monthsSince
+	return GetMonthsBetween(date, time.Now())
 }
 
 // How many days are there in between two dates.

@@ -2,10 +2,12 @@ package god
 
 import (
 	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 )
 
-// Not as useful as God. But hey, still the Pope.
+// Not as useful as God. But hey, still holy.
 
 /* ── ── ── Slices & Maps ── ── ── */
 
@@ -50,4 +52,10 @@ func CreateFile(filename, content string) error {
 func GetFileExt(filename string) string {
 	split := strings.Split(filename, ".")
 	return "." + split[len(split)-1]
+}
+
+func WaitForSignal() {
+	waitForSignal := make(chan os.Signal, 1)
+	signal.Notify(waitForSignal, []os.Signal{os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM}...)
+	<-waitForSignal
 }

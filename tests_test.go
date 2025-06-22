@@ -1,6 +1,9 @@
 package god
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 // God writes all his tests in a single file, even if go says otherwise.
 // God is above standards.
@@ -27,6 +30,28 @@ func TestMapNumToChar(t *testing.T) {
 }
 
 /* ~-~-~-~-~ Tests: time.go -~-~-~-~ */
+
+func TestGetMonthsBetween(t *testing.T) {
+	// Test cases: (date1, date2, expected months between)
+	testCases := []struct {
+		date1    string
+		date2    string
+		expected int
+	}{
+		{"2025-01-01", "2025-06-01", 5},
+		{"2025-01-01", "2025-05-31", 4},
+		{"2025-01-01", "2025-05-30", 4},
+		{"2025-01-01", "2025-05-02", 4},
+	}
+
+	for _, tc := range testCases {
+		date1, _ := time.Parse("2006-01-02", tc.date1)
+		date2, _ := time.Parse("2006-01-02", tc.date2)
+		if got := GetMonthsBetween(date1, date2); got != tc.expected {
+			t.Errorf("🚫 GetMonthsBetween(%s, %s) returned %d (wanted %d)", tc.date1, tc.date2, got, tc.expected)
+		}
+	}
+}
 
 /* ~-~-~-~-~ Testing Framework -~-~-~-~ */
 
